@@ -1,75 +1,48 @@
-# Nuxt Minimal Starter
+# Nuxt Project 🚀
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A **Nuxt 4** project for managing **users** and **products/vehicles** with features like **create, edit, delete**, and **local storage persistence**. Built with **Vue 3**, **Nuxt 4**, and **TailwindCSS**.  
 
-## Setup
+---
 
-Make sure to install dependencies:
+## 🌐 Live Demo
 
-```bash
-# npm
-npm install
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://samiprawal.github.io/nuxt_project/)
 
-# pnpm
-pnpm install
+Click the badge above to see the app in action.
 
-# yarn
-yarn install
+---
 
-# bun
-bun install
-```
+## ⚡ Features
 
-## Development Server
+- **User Management**
+  - Add new users
+  - Edit user details
+  - Delete users
+  - Validation for form inputs
+- **Product/Vehicle Management**
+  - Add new products/vehicles
+  - Edit product details
+  - Delete products
+  - Validation for form inputs
+- **Persistent Data**
+  - Stores all users and products in **local storage**
+  - Refreshing the page keeps your created data
+- **Responsive Design**
+  - Fully responsive UI using **TailwindCSS**
+- **Alerts & Confirmation**
+  - Alerts on successful creation
+  - Confirmation before saving edits or deleting
 
-Start the development server on `http://localhost:3000`:
+---
 
-```bash
-# npm
-npm run dev
+## 🛠 Tech Stack
 
-# pnpm
-pnpm dev
+- [Nuxt 4](https://nuxt.com/)
+- [Vue 3](https://vuejs.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [LocalStorage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 
-# yarn
-yarn dev
+---
 
-# bun
-bun run dev
-```
+## 📝 Project Structure
 
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
