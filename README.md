@@ -1,48 +1,86 @@
-# Nuxt Project 🚀
+<template>
+  <div class="flex min-h-screen bg-gray-100 relative">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gradient-to-b from-gray-800 to-gray-900 text-white p-6 flex flex-col justify-between">
+      <div>
+        <h2 class="text-2xl font-bold mb-8 text-center tracking-wide">Admin Panel</h2>
+        <ul class="space-y-2">
+          <li>
+            <NuxtLink to="/" class="block px-4 py-2 rounded-lg hover:bg-gray-700 transition"
+                      :class="{ 'bg-gray-700': route.path === '/' }">
+              Dashboard
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/admin" class="block px-4 py-2 rounded-lg hover:bg-gray-700 transition"
+                      :class="{ 'bg-gray-700': route.path === '/admin' }">
+              Index
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/users" class="block px-4 py-2 rounded-lg hover:bg-gray-700 transition"
+                      :class="{ 'bg-gray-700': route.path.startsWith('/users') }">
+              Users
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/products" class="block px-4 py-2 rounded-lg hover:bg-gray-700 transition"
+                      :class="{ 'bg-gray-700': route.path.startsWith('/products') }">
+              Products
+            </NuxtLink>
+          </li>
+          
+          <li>
+            <NuxtLink to="/about" class="block px-4 py-2 rounded-lg hover:bg-gray-700 transition"
+                      :class="{ 'bg-gray-700': route.path === '/about' }">
+              About
+            </NuxtLink>
+          </li>
+        </ul>
+      </div>
+      <p class="text-center text-gray-400 text-sm mt-8">&copy; 2026 Company</p>
+    </aside>
 
-A **Nuxt 4** project for managing **users** and **products/vehicles** with features like **create, edit, delete**, and **local storage persistence**. Built with **Vue 3**, **Nuxt 4**, and **TailwindCSS**.  
+    <!-- Main content -->
+    <main class="flex-1 p-6 relative">
+      <!-- Navbar -->
+      <nav class="bg-white p-4 rounded-xl shadow-md flex justify-between items-center mb-6">
+        <h1 class="text-xl font-semibold text-gray-800">Welcome, Admin</h1>
+        
+      </nav>
 
----
+      <!-- Page content -->
+      <NuxtPage />
 
-## 🌐 Live Demo
+      <!-- Scroll to Top Button -->
+      <button
+        v-show="showScrollTop"
+        @click="scrollToTop"
+        class="fixed bottom-8 right-8 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition"
+      >
+        ↑ Top
+      </button>
+    </main>
+  </div>
+</template>
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://samiprawal.github.io/nuxt_project/)
+<script setup>
+import { useRoute } from 'vue-router'
+import { ref, onMounted, onUnmounted } from 'vue'
 
-Click the badge above to see the app in action.
+const route = useRoute()
+const showScrollTop = ref(false)
 
----
+// Show button when scrolled down
+const handleScroll = () => {
+  showScrollTop.value = window.scrollY > 200
+}
 
-## ⚡ Features
+// Scroll smoothly to top
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
 
-- **User Management**
-  - Add new users
-  - Edit user details
-  - Delete users
-  - Validation for form inputs
-- **Product/Vehicle Management**
-  - Add new products/vehicles
-  - Edit product details
-  - Delete products
-  - Validation for form inputs
-- **Persistent Data**
-  - Stores all users and products in **local storage**
-  - Refreshing the page keeps your created data
-- **Responsive Design**
-  - Fully responsive UI using **TailwindCSS**
-- **Alerts & Confirmation**
-  - Alerts on successful creation
-  - Confirmation before saving edits or deleting
-
----
-
-## 🛠 Tech Stack
-
-- [Nuxt 4](https://nuxt.com/)
-- [Vue 3](https://vuejs.org/)
-- [TailwindCSS](https://tailwindcss.com/)
-- [LocalStorage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
-
----
-
-## 📝 Project Structure
-
+onMounted(() => window.addEventListener('scroll', handleScroll))
+onUnmounted(() => window.removeEventListener('scroll', handleScroll))
+</script>
