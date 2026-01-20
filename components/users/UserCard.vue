@@ -39,17 +39,18 @@
 </template>
 
 <script setup>
+import { useUsers } from '@/composables/useUsers' 
+
 defineProps({
   user: Object
 })
 
+const { deleteUser } = useUsers() 
+
 const confirmDelete = (id) => {
   if (confirm('Are you sure you want to delete this user?')) {
-    // emit delete event only if confirmed
-    emit('delete', id)
+    deleteUser(id) 
+    alert('User deleted successfully!')
   }
 }
-
-// Access to emit in script setup
-const emit = defineEmits(['delete'])
 </script>

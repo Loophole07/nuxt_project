@@ -1,15 +1,14 @@
 <template>
-  <div v-if="product" class="max-w-4xl mx-auto bg-white rounded-xl shadow p-6">
+  <div v-if="product" class="max-w-4xl mx-auto bg-white rounded-xl shadow p-6 mt-6">
     <!-- Product Info -->
-    <div class="mt-6 flex flex-col gap-4">
+    <div class="flex flex-col gap-4">
       <h1 class="text-2xl font-bold">{{ product.name }}</h1>
       <p class="text-gray-500">Model: {{ product.model }}</p>
       <p class="text-lg font-semibold">Price: Rs. {{ product.price }}</p>
       <p class="text-gray-600">{{ product.details }}</p>
 
       <!-- Action Buttons -->
-      <div class="flex items-center gap-3 mt-4">
-        
+      <div class="flex flex-wrap items-center gap-3 mt-4">
         <!-- Edit Button -->
         <button
           @click="editProduct(product.id)"
@@ -20,7 +19,7 @@
 
         <!-- Delete Button -->
         <button
-          @click="deleteProduct(product.id)"
+          @click="confirmDelete(product.id)"
           class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
         >
           Delete
@@ -45,20 +44,22 @@ import { useProducts } from '@/composables/useProducts'
 
 const route = useRoute()
 const router = useRouter()
-const { getProductById, removeProduct } = useProducts()
+const { getProductById, deleteProduct } = useProducts() // updated function name
+
 
 const product = computed(() => getProductById(route.params.id))
 
-// Edit handler
+
 const editProduct = (id) => {
-  router.push(`/products/edit/${id}`)
+  router.push(`/products/${id}/edit`)
 }
 
-// Delete handler
-const deleteProduct = (id) => {
+
+const confirmDelete = (id) => {
   if (confirm('Are you sure you want to delete this product?')) {
-    removeProduct(id)
+    deleteProduct(id) 
     router.push('/products') 
+    alert('Product deleted successfully!')
   }
 }
 </script>

@@ -29,12 +29,7 @@
               Products
             </NuxtLink>
           </li>
-          <li>
-            <NuxtLink to="/login" class="block px-4 py-2 rounded-lg hover:bg-gray-700 transition"
-                      :class="{ 'bg-gray-700': route.path === '/login' }">
-              Login
-            </NuxtLink>
-          </li>
+          
           <li>
             <NuxtLink to="/about" class="block px-4 py-2 rounded-lg hover:bg-gray-700 transition"
                       :class="{ 'bg-gray-700': route.path === '/about' }">
@@ -51,9 +46,7 @@
       <!-- Navbar -->
       <nav class="bg-white p-4 rounded-xl shadow-md flex justify-between items-center mb-6">
         <h1 class="text-xl font-semibold text-gray-800">Welcome, Admin</h1>
-        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-          Logout
-        </button>
+        
       </nav>
 
       <!-- Page content -->

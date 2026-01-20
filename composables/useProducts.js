@@ -1,8 +1,12 @@
-import honda from '@/assets/images/vehicles/honda.webp'
+import { ref, watch } from 'vue'
 
-export const useProducts = () => {
-  const products = ref([
-    {
+const STORAGE_KEY = 'products'
+
+
+const products = ref([])
+
+const defaultProducts = [
+ {
       id: 1,
       name: 'Yamaha FZ',
       model: '2023',
@@ -187,10 +191,49 @@ export const useProducts = () => {
     details: 'SUV, rugged build, off-road capability',
     image: '/assets/images/vehicles/jeep-compass.webp'
   }
-  ])
+]
+
+if (process.client && products.value.length === 0) {
+  const saved = localStorage.getItem(STORAGE_KEY)
+
+  products.value = saved
+    ? [...defaultProducts, ...JSON.parse(saved)]
+    : defaultProducts
+}
+
+
+if (process.client) {
+  watch(
+    products,
+    (val) => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(val))
+    },
+    { deep: true }
+  )
+}
+
+export const useProducts = () => {
+  const addProduct = (product) => {
+    products.value.push({ ...product, id: Date.now() })
+  }
 
   const getProductById = (id) =>
     products.value.find(p => p.id === Number(id))
 
-  return { products, getProductById }
+  const updateProduct = (updatedProduct) => {
+    const index = products.value.findIndex(p => p.id === updatedProduct.id)
+    if (index !== -1) products.value[index] = updatedProduct
+  }
+
+  const deleteProduct = (id) => {
+    products.value = products.value.filter(p => p.id !== id)
+  }
+
+  return {
+    products,
+    addProduct,
+    getProductById,
+    updateProduct,
+    deleteProduct
+  }
 }

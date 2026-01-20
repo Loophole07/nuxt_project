@@ -1,6 +1,15 @@
 <template>
   <div>
-    <h1 class="text-2xl font-bold mb-6">Users</h1>
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold">Users</h1>
+     
+      <NuxtLink
+        to="/users/create"
+        class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+      >
+        + Create User
+      </NuxtLink>
+    </div>
 
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       <UserCard

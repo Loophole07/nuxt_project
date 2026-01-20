@@ -1,6 +1,12 @@
-export const useUsers = () => {
-  const users = ref([
-  { id: 1, name: 'Samip Rawal', email: 'samip@example.com', phone: '9800000000', address: 'Tikathali, Lalitpur' },
+import { ref, watch } from 'vue'
+
+const STORAGE_KEY = 'users'
+
+
+const users = ref([])
+
+const defaultUsers = [
+          { id: 1, name: 'Samip Rawal', email: 'samip@example.com', phone: '9800000000', address: 'Tikathali, Lalitpur' },
   { id: 2, name: 'Bindeshwori Rawal', email: 'bindu@example.com', phone: '9811111111', address: 'Sivanagar' },
   { id: 3, name: 'Suman Rawal', email: 'suman@example.com', phone: '9822222222', address: 'Baneshwor, Kathmandu' },
   { id: 4, name: 'Anita Sharma', email: 'anita@example.com', phone: '9833333333', address: 'Kalanki, Kathmandu' },
@@ -32,8 +38,50 @@ export const useUsers = () => {
   { id: 28, name: 'Roshan Oli', email: 'roshan@example.com', phone: '9818181818', address: 'Dang' },
   { id: 29, name: 'Sneha Shrestha', email: 'sneha@example.com', phone: '9819191919', address: 'New Road, Kathmandu' },
   { id: 30, name: 'Bibek Gautam', email: 'bibek@example.com', phone: '9820202020', address: 'Balaju, Kathmandu' }
-])
+]
 
- const getUserById = (id) => users.value.find(u => u.id === Number(id))
-  return { users, getUserById }
+
+if (process.client && users.value.length === 0) {
+  const saved = localStorage.getItem(STORAGE_KEY)
+
+  users.value = saved
+    ? [...defaultUsers, ...JSON.parse(saved)]
+    : defaultUsers
+}
+
+
+if (process.client) {
+  watch(
+    users,
+    (val) => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(val))
+    },
+    { deep: true }
+  )
+}
+
+export const useUsers = () => {
+  const addUser = (user) => {
+    users.value.push({ ...user, id: Date.now() })
+  }
+
+  const getUserById = (id) =>
+    users.value.find(u => u.id === Number(id))
+
+  const updateUser = (updatedUser) => {
+    const index = users.value.findIndex(u => u.id === updatedUser.id)
+    if (index !== -1) users.value[index] = updatedUser
+  }
+
+  const deleteUser = (id) => {
+    users.value = users.value.filter(u => u.id !== id)
+  }
+
+  return {
+    users,
+    addUser,
+    getUserById,
+    updateUser,
+    deleteUser
+  }
 }

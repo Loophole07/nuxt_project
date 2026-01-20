@@ -1,5 +1,6 @@
 <template>
-  <div v-if="user" class="max-w-3xl mx-auto bg-white rounded-xl shadow p-6">
+  <div v-if="user" class="max-w-3xl mx-auto bg-white rounded-xl shadow p-6 mt-6">
+    <!-- User Info -->
     <h1 class="text-2xl font-bold">{{ user.name }}</h1>
 
     <div class="mt-4 text-gray-600 space-y-2">
@@ -8,8 +9,8 @@
       <p><span class="font-medium">Address:</span> {{ user.address }}</p>
     </div>
 
-    <div class="mt-6 flex space-x-4">
-      <!-- Edit Button (Green) -->
+    <!-- Action Buttons -->
+    <div class="mt-6 flex flex-wrap gap-3">
       <button
         @click="editUser(user.id)"
         class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
@@ -17,15 +18,15 @@
         Edit
       </button>
 
-      <!-- Delete Button (Red) -->
       <button
-        @click="deleteUser(user.id)"
+        @click="confirmDelete(user.id)"
         class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
       >
         Delete
       </button>
     </div>
 
+    <!-- Back Link -->
     <NuxtLink
       to="/users"
       class="inline-block mt-6 text-blue-600 hover:underline"
@@ -36,25 +37,28 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useUsers } from '@/composables/useUsers'
 
 const route = useRoute()
 const router = useRouter()
-const { getUserById, removeUser } = useUsers()
+const { getUserById, deleteUser } = useUsers() // use deleteUser from composable
+
 
 const user = computed(() => getUserById(route.params.id))
 
-// Edit handler 
+
 const editUser = (id) => {
-  router.push(`/users/edit/${id}`)
+  router.push(`/users/${id}/edit`)
 }
 
-// Delete handler 
-const deleteUser = (id) => {
+
+const confirmDelete = (id) => {
   if (confirm('Are you sure you want to delete this user?')) {
-    removeUser(id)
+    deleteUser(id)
     router.push('/users') 
+    alert('User deleted successfully!')
   }
 }
 </script>

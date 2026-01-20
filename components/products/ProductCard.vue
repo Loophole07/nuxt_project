@@ -35,15 +35,18 @@
 </template>
 
 <script setup>
+import { useProducts } from '@/composables/useProducts' 
+
 defineProps({
   product: Object
 })
 
+const { deleteProduct } = useProducts() 
+
 const confirmDelete = (id) => {
   if (confirm('Are you sure you want to delete this product?')) {
-    emit('delete', id)
+    deleteProduct(id) 
+    alert('Product deleted successfully!')
   }
 }
-
-const emit = defineEmits(['delete'])
 </script>
